@@ -4,8 +4,12 @@ import processing.core.PApplet;
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.providers.AbstractMapProvider;
+import de.fhpotsdam.unfolding.providers.EsriProvider;
+import de.fhpotsdam.unfolding.providers.GeoMapApp;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.MapBox;
+import de.fhpotsdam.unfolding.providers.MapQuestProvider;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 
 /** HelloWorld
@@ -47,6 +51,8 @@ public class HelloWorld extends PApplet
 		
 		// Select a map provider
 		AbstractMapProvider provider = new Google.GoogleTerrainProvider();
+		AbstractMapProvider provider2 = new EsriProvider.NatGeoWorldMap();
+		AbstractMapProvider provider3 = new Google.GoogleMapProvider();
 		// Set a zoom level
 		int zoomLevel = 10;
 		
@@ -75,6 +81,10 @@ public class HelloWorld extends PApplet
 		MapUtils.createDefaultEventDispatcher(this, map1);
 		
 		// TODO: Add code here that creates map2 
+		map2 = new UnfoldingMap(this, 450, 50, 350, 500, provider3);
+		map2.zoomAndPanTo(zoomLevel, new Location(33.5f, 36.29f));
+		MapUtils.createDefaultEventDispatcher(this, map2);
+
 		// Then you'll modify draw() below
 
 	}
@@ -84,6 +94,7 @@ public class HelloWorld extends PApplet
 		// So far we only draw map1...
 		// TODO: Add code so that both maps are displayed
 		map1.draw();
+		map2.draw();
 	}
 
 	
