@@ -1,5 +1,5 @@
-# Course1StarterCode
+# EarthquakesMapJava
 
-This is the starter code for the UCSD Coursera MOOC Object Oriented Programming in Java: https://www.coursera.org/learn/object-oriented-java.  
+This is a project developed during the UCSD Coursera MOOC Object Oriented Programming in Java: https://www.coursera.org/learn/object-oriented-java.  
 
-It is an eclipse project that can be imported as an existing project.  Please see the README provided within the eclipse project for more information.
+It uses Processing and UnfoldingMap Java libraries to create an interactive map that displays information about the most recent erthquakes globally.
