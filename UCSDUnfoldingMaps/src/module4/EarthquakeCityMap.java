@@ -76,8 +76,8 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
-		//earthquakesURL = "test1.atom";
-		//earthquakesURL = "test2.atom";
+//		earthquakesURL = "test1.atom";
+//		earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
 		//earthquakesURL = "quiz1.atom";
@@ -214,6 +214,32 @@ public class EarthquakeCityMap extends PApplet {
 		//        String country = (String)m.getProperty("country");
 		
 		
+		for (Marker cm: countryMarkers) {
+			int quakeCounter = 0;
+			String name = (String)cm.getProperty("name");
+			
+			for (Marker qm: quakeMarkers) {
+				if(((EarthquakeMarker)qm).isOnLand()) {
+					String countryName = (String)qm.getProperty("country");
+					if (name == countryName) {
+						quakeCounter += 1;
+					}
+				}
+			}
+			
+			if (quakeCounter > 0) {
+				System.out.println(quakeCounter + " Earthquakes occurred in " + name + ".");
+			}
+		}
+		
+		// calculate the number of the earthquakes occurred in oceans
+		int oceanQuakeCounter = 0;
+		for (Marker m: quakeMarkers) {
+			if ((!((EarthquakeMarker)m).isOnLand())) {
+				oceanQuakeCounter += 1;
+			}
+		}
+		System.out.println(oceanQuakeCounter + " Earthquakes occurred in ocean.");	
 	}
 	
 	
