@@ -15,7 +15,7 @@ import de.fhpotsdam.unfolding.data.Feature;
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
-import de.fhpotsdam.unfolding.providers.Google;
+import de.fhpotsdam.unfolding.providers.EsriProvider;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
 import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
@@ -56,7 +56,7 @@ public class EarthquakeCityMapDemo extends PApplet {
 		size(950, 600, OPENGL);
 
 		// Assume online
-		map = new UnfoldingMap(this, 200, 50, 700, 500, new Google.GoogleMapProvider());
+		map = new UnfoldingMap(this, 50, 50, 700, 500, new EsriProvider.NatGeoWorldMap());
 //		map = new UnfoldingMap(this, 200, 50, 700, 500, new OpenStreetMap.OpenStreetMapProvider() );
 //	    map = new UnfoldingMap(this, 200, 50, 650, 600, new MBTilesMapProvider(mbTilesString));
 
@@ -187,8 +187,9 @@ public class EarthquakeCityMapDemo extends PApplet {
 	}
 	
 	public void draw() {
-	    background(10);
+//	    background(10);
 	    map.draw();
+	    drawButtons();
 	    addKey();
 	}
 
@@ -199,5 +200,28 @@ public class EarthquakeCityMapDemo extends PApplet {
 	{	
 		// Remember you can use Processing's graphics methods here
 	
+	}
+	
+	// helper method to draw buttons
+	private void drawButtons() {
+		
+		fill(255, 255, 255);
+		rect(100, 100, 25, 25);
+		
+		fill(100, 100, 100);
+		rect(100, 150, 25, 25);
+	}
+	
+	// mouse released event
+	public void mouseReleased() {
+		if (mouseX > 100 && mouseX < 125
+				&& mouseY > 100 && mouseY < 125) {
+			background(255, 255, 255);
+			System.out.println("Background becomes white.");
+		} else if (mouseX > 100 && mouseX < 125 
+				&& mouseY > 150 && mouseY < 175) {
+			background(100, 100, 100);
+			System.out.println("Background becomes gray");
+		}
 	}
 }
