@@ -6,4 +6,4 @@ It uses Processing and UnfoldingMap Java libraries to create an interactive map 
 
 <h3>Class Diagram</h3>
 
-<img src="images/ClassDiagram.png">
+<img src="images/ClassDiagramModule5.png">
