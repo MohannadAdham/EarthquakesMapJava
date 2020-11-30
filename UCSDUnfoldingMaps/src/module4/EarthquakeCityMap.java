@@ -171,6 +171,24 @@ public class EarthquakeCityMap extends PApplet {
 		// Add the size key
 		fill(color(0, 0, 0));
 		text("Size ~ Magnitude", 45, 170);
+		
+		// Add the shallow depth key
+		fill(color(255, 255, 0));
+		ellipse(50, 215, 10, 10);
+		fill(color(0, 0, 0));
+		text("Shallow", 75, 215);
+		
+		// Add the intermediate depth key
+		fill(color(0, 0, 255));
+		ellipse(50, 240, 10, 10);
+		fill(color(0, 0, 0));
+		text("Intermediate", 75, 240);
+		
+		// Add the deep depth key
+		fill(color(255, 0, 0));
+		ellipse(50, 265, 10, 10);
+		fill(color(0, 0, 0));
+		text("Deep", 75, 265);
 	}
 
 	
