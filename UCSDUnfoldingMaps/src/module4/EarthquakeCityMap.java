@@ -162,6 +162,15 @@ public class EarthquakeCityMap extends PApplet {
 		fill(color(0, 0, 0));
 		text("Land Quake", 75, 125);
 		
+		// Add the OceanQuake key
+		fill(color(255, 255, 255));
+		rect(45, 145, 10, 10);
+		fill(color(0, 0, 0));
+		text("Ocean Quake", 75, 150);
+		
+		// Add the size key
+		fill(color(0, 0, 0));
+		text("Size ~ Magnitude", 45, 170);
 	}
 
 	
