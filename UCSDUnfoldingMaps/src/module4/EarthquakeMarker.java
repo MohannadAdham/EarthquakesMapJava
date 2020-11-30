@@ -4,6 +4,7 @@ import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 import processing.core.PGraphics;
 
+
 /** Implements a visual marker for earthquakes on an earthquake map
  * 
  * @author UC San Diego Intermediate Software Development MOOC team
@@ -81,6 +82,15 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	// You might find the getters below helpful.
 	private void colorDetermine(PGraphics pg) {
 		//TODO: Implement this method
+		if (this.getDepth() <= THRESHOLD_INTERMEDIATE) {
+			pg.fill(255, 255, 0); // yellow
+		}
+		else if (getDepth() > THRESHOLD_INTERMEDIATE && getDepth() <= THRESHOLD_DEEP){
+			pg.fill(0, 0, 255); // blue
+		}
+		else if (getDepth() > THRESHOLD_DEEP) {
+			pg.fill(255, 0, 0); // red
+		}
 	}
 	
 	
