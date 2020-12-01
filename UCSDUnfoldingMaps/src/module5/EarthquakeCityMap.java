@@ -166,6 +166,61 @@ public class EarthquakeCityMap extends PApplet {
 		// TODO: Implement this method
 		// Hint: You probably want a helper method or two to keep this code
 		// from getting too long/disorganized
+		if (lastClicked != null) {
+			lastClicked.setClicked(false);
+			unhideMarkers();
+			lastClicked = null;
+		} else {
+			for (Marker qm: quakeMarkers) {
+				if (qm.isInside(map, mouseX, mouseY)) {
+					lastClicked = (CommonMarker)qm;
+					hideMarkers();
+					qm.setHidden(false);
+					unhideAffectedCities((EarthquakeMarker)qm);
+				}
+			}
+			
+			for (Marker cm: cityMarkers) {
+				if (cm.isInside(map, mouseX, mouseY)) {
+					lastClicked = (CommonMarker)cm;
+					hideMarkers();
+					cm.setHidden(false);
+					unhideNearEarthquake((CityMarker)cm);
+				}
+			}
+		}
+	}
+	
+	// display the cities within the threat circle of an Earthquake
+	private void unhideAffectedCities(EarthquakeMarker qm) {
+		for (Marker cm: cityMarkers) {
+			if (cm.getDistanceTo(qm.getLocation()) <= (qm.threatCircle())) {
+				cm.setHidden(false);
+			}
+		}
+	}
+	
+	// display earthquakes whose the treat circle includes a city
+	private void unhideNearEarthquake(CityMarker cm) {
+		for (Marker m: quakeMarkers) {
+			EarthquakeMarker qm = (EarthquakeMarker)m;
+			if (cm.getDistanceTo(qm.getLocation()) <= (qm.threatCircle())) {
+				qm.setHidden(false);
+			}
+		}
+	}
+	
+	
+	
+	// hide markers
+	private void hideMarkers() {
+		for(Marker marker: quakeMarkers) {
+			marker.setHidden(true);
+		}
+		
+		for(Marker marker: cityMarkers) {
+			marker.setHidden(true);
+		}
 	}
 	
 	
