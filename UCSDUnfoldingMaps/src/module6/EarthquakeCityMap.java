@@ -82,7 +82,7 @@ public class EarthquakeCityMap extends PApplet {
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
 		//earthquakesURL = "test1.atom";
-		//earthquakesURL = "test2.atom";
+//		earthquakesURL = "test2.atom";
 		
 		// Uncomment this line to take the quiz
 		//earthquakesURL = "quiz2.atom";
@@ -123,6 +123,8 @@ public class EarthquakeCityMap extends PApplet {
 	    //           for their geometric properties
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
+	    
+	    sortAndPrint(500);
 	    
 	    
 	}  // End setup
@@ -408,6 +410,44 @@ public class EarthquakeCityMap extends PApplet {
 			return true;
 		}
 		return false;
+	}
+	
+	private void sortAndPrint(int numToPrint) {
+		
+		// get the quakeMarkers as an array of objects
+		Object[] objects = quakeMarkers.toArray();
+		// convert the array of objects to an array of EarthquakeMarker objects
+		EarthquakeMarker[] markers = new EarthquakeMarker[objects.length];
+		System.arraycopy(objects, 0, markers, 0, objects.length);
+		
+		// sort the earthquakes in the array by descending order of magnitude
+		// use the insertion sort algorithm
+		int currInd;
+		for (int pos=1; pos < markers.length; pos++) {
+			currInd = pos;
+			while(currInd > 0 && markers[currInd].compareTo(markers[currInd-1]) > 0) {
+				swap(markers, currInd, currInd-1);
+				currInd -= 1;
+			}
+		}
+		
+		// limit the numToPrint value to the length of the array
+		if (numToPrint > markers.length) {
+			numToPrint = markers.length;
+		}
+		
+		// print the numToPrint earthquakes sorted by magnitude	
+		System.out.println("Top earthquakes sorted by magnitude");
+		for (int i=0; i < numToPrint; i++) {
+			System.out.println(markers[i].getTitle() + " Magnitude: " + markers[i].getMagnitude());
+		}
+		
+	}
+	
+	private void swap(EarthquakeMarker[] markers, int i, int j){
+		Marker temp = markers[i];
+		markers[i] = markers[j];
+		markers[j] = (EarthquakeMarker)temp;
 	}
 
 }
