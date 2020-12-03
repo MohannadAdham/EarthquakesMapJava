@@ -1,12 +1,14 @@
-package module6;
+package finalProject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.data.Feature;
 import de.fhpotsdam.unfolding.data.GeoJSONReader;
+import de.fhpotsdam.unfolding.data.MultiFeature;
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.AbstractShapeMarker;
@@ -50,6 +52,9 @@ public class EarthquakeCityMap extends PApplet {
 	private String cityFile = "city-data.json";
 	private String countryFile = "countries.geo.json";
 	
+	// The file containing the polygons representing the tectonic plates 
+	private String platesFile = "plates.json";
+	
 	// The map
 	private UnfoldingMap map;
 	
@@ -60,6 +65,9 @@ public class EarthquakeCityMap extends PApplet {
 
 	// A List of country markers
 	private List<Marker> countryMarkers;
+	
+	// A List of tectonic plates markers
+	private List<Marker> plateMarkers;
 	
 	// NEW IN MODULE 5
 	private CommonMarker lastSelected;
@@ -85,13 +93,30 @@ public class EarthquakeCityMap extends PApplet {
 //		earthquakesURL = "test2.atom";
 		
 		// Uncomment this line to take the quiz
-		//earthquakesURL = "quiz2.atom";
+		earthquakesURL = "quiz2.atom";
 		
 		
 		// (2) Reading in earthquake data and geometric properties
 	    //     STEP 1: load country features and markers
 		List<Feature> countries = GeoJSONReader.loadData(this, countryFile);
 		countryMarkers = MapUtils.createSimpleMarkers(countries);
+		
+		// load tectonic plate features and markers
+		List<Feature> plates = GeoJSONReader.loadData(this, platesFile);
+//		plateMarkers = MapUtils.createSimpleMarkers(plates);
+		plateMarkers = new ArrayList<Marker>();
+		for (Feature plate: plates) {
+			if (plate instanceof MultiFeature) {
+				MultiFeature mplate = (MultiFeature)plate;
+				for (Feature plt: mplate.getFeatures()) {
+					plateMarkers.add(new PlateMarker(plt));
+				}
+			} 
+			else {
+				plateMarkers.add(new PlateMarker(plate));
+			}
+
+		}
 		
 		//     STEP 2: read in city data
 		List<Feature> cities = GeoJSONReader.loadData(this, cityFile);
@@ -121,8 +146,26 @@ public class EarthquakeCityMap extends PApplet {
 	    // (3) Add markers to map
 	    //     NOTE: Country markers are not added to the map.  They are used
 	    //           for their geometric properties
+	    int upperbound = 255;
+		Random rand = new Random();
+	    for (Marker m: plateMarkers) {
+	    	try {
+	    		
+	    		m.setColor(color(rand.nextInt(upperbound), rand.nextInt(upperbound), rand.nextInt(upperbound), 80));
+	    		m.setStrokeColor(color(60, 60, 60, 90));
+	    		m.setStrokeWeight(2);
+	    		map.addMarker(m);
+	    		System.out.println(m.getProperty("PlateName"));
+	    	}
+	    	catch(Exception e) {
+	    		System.out.println("Exception occurred");
+	    	}
+	    }
+	    
+	    
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
+//	    map.addMarkers(countryMarkers);
 	    
 	    sortAndPrint(25);
 	    
@@ -132,7 +175,12 @@ public class EarthquakeCityMap extends PApplet {
 	
 	public void draw() {
 		background(0);
-		map.draw();
+		try {
+			map.draw();
+		}
+		catch(Exception e) {
+			System.out.println("Something went wrong");
+		}
 		addKey();
 		
 	}
